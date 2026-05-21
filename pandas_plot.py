@@ -16,7 +16,7 @@ def zeige_leistungstest():
     st.write("Maximale Leistung:", maximalwert_leistung, "W")
 
     # 3. Zonen berechnen
-    hf_max = st.number_input("Deine maximale Herzfrequenz (HF max):", value=190, step=1)
+    hf_max = st.number_input("Deine maximale Herzfrequenz (HF max):", value=190, step=1 ,max_value=250, min_value=100)
     zone_grenzen = [0, 0.60 * hf_max, 0.70 * hf_max, 0.80 * hf_max, 0.90 * hf_max, hf_max]
     zone_namen = ["Zone 1 (<60%)", "Zone 2 (60-70%)", "Zone 3 (70-80%)", "Zone 4 (80-90%)", "Zone 5 (90-100%)"]
 

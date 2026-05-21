@@ -1,5 +1,6 @@
 import streamlit as st
 import read_data_1
+from pandas_plot import zeige_leistungstest
 
 # Überschriften
 st.write("# EKG APP")
@@ -34,5 +35,9 @@ if current_person_data and "picture_path" in current_person_data:
 else:
     # Falls in der JSON-Datei kein Bildpfad eingetragen ist oder etwas schiefging
     st.write("Kein Bild für diese Person gefunden.")
+
+# Leistungstest-Auswertung anzeigen
+st.write("---")
+zeige_leistungstest()
 
 

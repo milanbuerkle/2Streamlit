@@ -39,9 +39,17 @@ def zeige_leistungstest():
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     
     # Linien hinzufügen (Plotly wählt die Farben jetzt automatisch)
-    fig.add_trace(go.Scatter(x=df.index, y=df["PowerOriginal"], name="Leistung (W)"), secondary_y=False)
-    fig.add_trace(go.Scatter(x=df.index, y=df["HeartRate"], name="Herzfrequenz (bpm)"), secondary_y=True)
+    fig.add_trace(go.Scatter(x=df.index,y=df["PowerOriginal"],name="Leistung (W)",line=dict(color="blue")),secondary_y=False)
+    fig.add_trace(go.Scatter(x=df.index, y=df["HeartRate"], name="Herzfrequenz (bpm)",line=dict(color="red")), secondary_y=True)
     
+    for i in range(1, 5):
+        fig.add_hline(
+            y=zone_grenzen[i], 
+            line_color="yellow",  
+            line_width=1.5,         
+            secondary_y=True
+        )
+
     st.plotly_chart(fig, use_container_width=True)
 
 if __name__ == "__main__":

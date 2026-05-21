@@ -1,0 +1,2 @@
+pandas_plot in main einbauen
+Readme erstellen

@@ -34,3 +34,5 @@ if current_person_data and "picture_path" in current_person_data:
 else:
     # Falls in der JSON-Datei kein Bildpfad eingetragen ist oder etwas schiefging
     st.write("Kein Bild für diese Person gefunden.")
+
+

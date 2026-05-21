@@ -23,9 +23,9 @@ def zeige_leistungstest():
     df["Zone"] = pd.cut(df["HeartRate"], bins=zone_grenzen, labels=zone_namen)
     
     # 4. Tabellen erstellen und direkt ausgeben
-    zeit_pro_zone = df["Zone"].value_counts()
-    # Ändere diese Zeile in Schritt 4:
-    leistung_pro_zone = df.groupby("Zone")["PowerOriginal"].mean().round(2)
+    zeit_pro_zone = df.groupby("Zone").size().rename("verbrachte Zeit in jeweiliger Zone")
+    
+    leistung_pro_zone = df.groupby("Zone")["PowerOriginal"].mean().round(2).rename("erbrachte Leistung in jeweiliger Zone")
 
     st.subheader("Zonen-Analyse")
     st.write("**Zeit pro Zone (Sekunden):**")

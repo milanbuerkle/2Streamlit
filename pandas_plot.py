@@ -21,20 +21,10 @@ def zeige_leistungstest():
     zone_namen = ["Zone 1 (<60%)", "Zone 2 (60-70%)", "Zone 3 (70-80%)", "Zone 4 (80-90%)", "Zone 5 (90-100%)"]
 
     df["Zone"] = pd.cut(df["HeartRate"], bins=zone_grenzen, labels=zone_namen)
-    
-    # 4. Tabellen erstellen und direkt ausgeben
-    zeit_pro_zone = df.groupby("Zone").size().rename("verbrachte Zeit in jeweiliger Zone")
-    
-    leistung_pro_zone = df.groupby("Zone")["PowerOriginal"].mean().round(2).rename("erbrachte Leistung in jeweiliger Zone")
-
-    st.subheader("Zonen-Analyse")
-    st.write("**Zeit pro Zone (Sekunden):**")
-    st.dataframe(zeit_pro_zone)
-    
-    st.write("**Ø Leistung pro Zone:**")
-    st.dataframe(leistung_pro_zone)
-
-    # 5. Interaktiven Plot erstellen (Zwei Achsen sind für die Ansicht nötig)
+    return df, zone_grenzen
+  
+def leistungstest_data(df, zone_grenzen):
+     #Interaktiven Plot erstellen (Zwei Achsen sind für die Ansicht nötig)
     st.subheader("Interaktiver Kurvenverlauf")
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     
@@ -52,8 +42,22 @@ def zeige_leistungstest():
 
     st.plotly_chart(fig, use_container_width=True)
 
+  
+    # 4. Tabellen erstellen und direkt ausgeben
+    zeit_pro_zone = df.groupby("Zone").size().rename("verbrachte Zeit in jeweiliger Zone")
+    
+    leistung_pro_zone = df.groupby("Zone")["PowerOriginal"].mean().round(2).rename("erbrachte Leistung in jeweiliger Zone")
+
+    st.subheader("Zonen-Analyse")
+    st.write("**Zeit pro Zone (Sekunden):**")
+    st.dataframe(zeit_pro_zone)
+    
+    st.write("**Ø Leistung pro Zone:**")
+    st.dataframe(leistung_pro_zone)
+
+
 if __name__ == "__main__":
     zeige_leistungstest()
 
 
-    #hallo
+    

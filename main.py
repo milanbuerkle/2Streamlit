@@ -3,6 +3,7 @@ import read_data_1
 from pandas_plot import zeige_leistungstest
 from pandas_plot import leistungstest_data
 
+st.set_page_config(layout="wide")
 # Überschriften
 st.write("# EKG APP")
 st.write("## Versuchsperson auswählen")
@@ -42,7 +43,9 @@ with col1:
 
     # Leistungstest-Auswertung anzeigen
 with col2:
-    df, zone_grenzen = zeige_leistungstest()
-leistungstest_data(df, zone_grenzen)
+    df, zone_grenzen, watt_grenzen = zeige_leistungstest()
 
+st.write("---")
+
+leistungstest_data(df, zone_grenzen, watt_grenzen)
 

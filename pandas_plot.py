@@ -23,8 +23,18 @@ def zeige_leistungstest():
 
     df["Zone"] = pd.cut(df["HeartRate"], bins=zone_grenzen, labels=zone_namen)
 
+    # Typische FTP-Verteilung: Z1 (<55%), Z2 (55-75%), Z3 (75-90%), Z4 (90-105%), Z5 (105-120%), Z6 (120-150%), Z7 (>150%)
     watt_max = df["PowerOriginal"].max()
-    watt_grenzen = [0, 0.55 * watt_max, 0.75 * watt_max, 0.90 * watt_max, 1.05 * watt_max, watt_max * 1.5]
+    watt_grenzen = [
+        0, 
+        0.55 * watt_max, 
+        0.75 * watt_max, 
+        0.90 * watt_max, 
+        1.05 * watt_max, 
+        1.20 * watt_max, 
+        1.50 * watt_max, 
+        watt_max * 2.0
+    ]
     return df, zone_grenzen, watt_grenzen
 
   
@@ -66,24 +76,28 @@ def leistungstest_data(df, zone_grenzen, watt_grenzen):
         "rgba(200, 0, 0, 0.15)"     # Zone 5: Dunkelrot
     ]
     watt_farben = [
-        "rgba(230, 210, 255, 0.25)", # Z1: Sehr helles Lila
-        "rgba(200, 160, 255, 0.22)", # Z2: Helles Lila
-        "rgba(170, 110, 255, 0.18)", # Z3: Mittleres Lila
-        "rgba(130, 50, 230, 0.15)",  # Z4: Kräftiges Lila
-        "rgba(80, 0, 160, 0.15)"     # Z5: Dunkellila
+        "rgba(241, 226, 237, 0.4)",  # Z1: Active Recovery (hellrosa)
+        "rgba(220, 190, 210, 0.4)",  # Z2: Endurance (etwas dunkleres rosa)
+        "rgba(203, 161, 191, 0.4)",  # Z3: Tempo
+        "rgba(182, 127, 169, 0.4)",  # Z4: Threshold
+        "rgba(160, 94, 146, 0.4)",   # Z5: VO2Max
+        "rgba(139, 66, 125, 0.4)",   # Z6: Anaerobic (dunkellila)
+        "rgba(105, 35, 95, 0.4)"     # Z7: Neuromuscular (tiefes, dunkles Lila)
         ]
     hintergrund_shapes = []
     
     if hintergrund_auswahl != "Keine":
         if hintergrund_auswahl == "Herzfrequenz-Zonen":
             aktuelle_grenzen = zone_grenzen
-            aktuelle_farben = Herzfrequenz_farben  # KORREKTUR: Name angepasst
+            aktuelle_farben = Herzfrequenz_farben 
+            anzahl_zonen = 5
         else:
             aktuelle_grenzen = watt_grenzen
             aktuelle_farben = watt_farben
+            anzahl_zonen = 7
             
-        # KORREKTUR: Die Schleife ist jetzt richtig eingerückt
-        for i in range(5):
+    
+        for i in range(anzahl_zonen):
             hintergrund_shapes.append(
                 dict(
                     type="rect",
@@ -126,7 +140,6 @@ def leistungstest_data(df, zone_grenzen, watt_grenzen):
 
 
 if __name__ == "__main__":
-    zeige_leistungstest()
-
-
+    df, zone_grenzen, watt_grenzen = zeige_leistungstest()
+    leistungstest_data(df, zone_grenzen, watt_grenzen)
     
